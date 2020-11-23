@@ -223,8 +223,15 @@ public class AtomicFileWriter extends Writer {
 
     @Override
     protected void finalize() throws Throwable {
-        closeAndDeleteTempFile();
-    }
+		/* ********OpenRefactory Warning********
+		 Overriding the finalize method is problematic. Avoid if possible
+		*/
+		try {
+		    closeAndDeleteTempFile();
+		} finally {
+			super.finalize();
+		}
+	}
 
     private void closeAndDeleteTempFile() throws IOException {
         // one way or the other, temporary file should be deleted.
